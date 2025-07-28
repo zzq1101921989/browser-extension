@@ -1,0 +1,52 @@
+.options-container {
+  padding: 20px;
+  width: 400px;
+  min-height: 300px;
+}
+
+.options-container h1 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.theme-selector {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: var(--border-radius);
+}
+
+.theme-selector label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.theme-selector input {
+  margin-right: 8px;
+}
+
+/* 主题样式 */
+.options-container.light {
+  background-color: white;
+  color: #333;
+}
+
+.options-container.dark {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.options-container.dark .theme-selector {
+  background-color: #2d2d2d;
+}
+
+.options-container.dark input,
+.options-container.dark textarea,
+.options-container.dark select {
+  background-color: #333;
+  color: #fff;
+  border-color: #444;
+}
