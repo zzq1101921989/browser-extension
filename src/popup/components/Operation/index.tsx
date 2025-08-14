@@ -3,7 +3,7 @@ import { FC } from "react"
 const Operaction: FC = () => {
     return (
         <section className="action-section">
-            <button
+            {/* <button
                 className="crawl-button"
                 onClick={() => setStatus('crawling')}
                 disabled={!currentSelector || status === 'crawling'}
@@ -21,7 +21,7 @@ const Operaction: FC = () => {
                 </select>
                 <button className="export-btn">导出数据</button>
                 <span className="data-count">{sampleData.length} 条记录</span>
-            </div>
+            </div> */}
         </section>
     )
 }

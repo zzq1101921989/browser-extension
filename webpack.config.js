@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-  
+
   return {
     entry: {
       background: './src/background/index.ts',
@@ -27,6 +27,26 @@ module.exports = (env, argv) => {
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader']
+        },
+        {
+          test: /\.less$/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  // 如果不设置为false，那么在使用css模块化的时候只能采用 import { button, text } from './styles.module.css';
+                  namedExport: false,
+                  localIdentName: isProduction
+                    ? '[hash:base64:8]'            // 生产环境：短哈希，如 a1b2c3d4
+                    : '[path][name]__[local]--[hash:base64:5]', // 开发环境：可读性强，如 src/popup/index__title--3j4k5
+                },
+                sourceMap: !isProduction,
+              },
+            },
+            'less-loader',
+          ],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,

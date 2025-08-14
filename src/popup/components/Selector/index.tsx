@@ -25,12 +25,19 @@ const Selector: FC = () => {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (tab.id) {
             switch (status) {
-                case 'Intelligent':
+                // 打开智能识别窗口
+                case 'Intelligent': {
                     await chrome.tabs.sendMessage(tab.id, {
                         action: 'Intelligent'
                     });
                     break;
-
+                }
+                case 'CreateRule': {
+                    await chrome.tabs.sendMessage(tab.id, {
+                        action: 'CreateRule'
+                    });
+                    break;
+                }
                 default:
                     break;
             }
@@ -86,7 +93,12 @@ const Selector: FC = () => {
                                     <h4>智能识别</h4>
                                     <p>根据内容特征智能识别，减少手动操作，更好的获取想要的内容</p>
                                 </div>
-                                <div className="feature-card">
+                                <div
+                                    className="feature-card"
+                                    onClick={() => {
+                                        sendContentCommand('CreateRule');
+                                    }}
+                                >
                                     <div className="feature-icon">🛠️</div>
                                     <h4>创建规则</h4>
                                     <p>直观的可视化界面，轻松创建复杂规则</p>
