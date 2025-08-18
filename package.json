@@ -18,7 +18,10 @@
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@types/chrome": "^0.1.1",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
     "babel-loader": "^10.0.0",
+    "babel-plugin-import": "^1.13.8",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
@@ -30,12 +33,12 @@
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.3",
     "webpack": "^5.100.2",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-bundle-size-analyzer": "^3.1.0",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2",
-    "webpack-extension-manifest-plugin": "^0.8.0"
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6"
+    "antd": "^5.27.0"
   }
 }

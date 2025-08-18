@@ -12,6 +12,13 @@ type ContentScriptMessage = {
 
 // 创建隔离的容器
 function createComponentContainer(id: string) {
+  // 检查是否已经存在容器
+  const existingContainer = document.getElementById(id);
+  if (existingContainer) {
+    existingContainer.innerHTML = ''; // 清空内容
+    return existingContainer;
+  }
+
   const container = document.createElement('div');
   container.id = id;
   document.body.appendChild(container);

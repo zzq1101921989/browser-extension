@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -62,6 +63,13 @@ module.exports = (env, argv) => {
       }
     },
     plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static', // 生成静态HTML报告
+        reportFilename: 'bundle-report.html',
+        openAnalyzer: false,   // 不自动打开浏览器
+        generateStatsFile: false, // 生成stats.json
+        statsFilename: 'stats.json'
+      }),
       new HtmlWebpackPlugin({
         template: './src/popup/index.html',
         filename: 'popup.html',

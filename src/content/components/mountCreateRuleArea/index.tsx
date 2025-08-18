@@ -1,4 +1,7 @@
 import Modal from "@components/Modal";
+import { Button, Form, Input, Space } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
 
 
@@ -8,21 +11,39 @@ type CreateRuleAreaProps = {
 const CreateRuleArea: React.FC<CreateRuleAreaProps> = (props) => {
     const { visible = true } = props;
 
+    const [open, setOpen] = useState(visible);
+
+    const startGetDom = () => {
+
+        // 1.触发鼠标移动高亮元素的逻辑
+
+        // 2.提供移动过滤器，让用户更加清晰的抓取想要获取的数据
+
+        // 3.关闭移动过滤器，鼠标移动事件取消
+        console.log(document.body, 'window');
+        
+    }
+
     return (
         <Modal
-            visible={visible}
+            visible={open}
             title="创建规则"
-            width={600}
-            height={400}
+            width={500}
+            height='100vh'
             onCancel={() => {
-                console.log('点击了取消');
+                setOpen(false);
             }}
+            maskClosable={false}
         >
-            <div className="create-rule-area">
-                <h2>创建规则</h2>
-                <p>在这里您可以创建新的规则。</p>
-                {/* 其他内容 */}
-            </div>
+            <Form>
+                <FormItem label='列表数据源'>
+                    <Space.Compact>
+                        <Input placeholder='请输入数据源' readOnly />
+                        <Button type='primary' onClick={startGetDom}>选择数据源</Button>
+                        <Button>验证</Button>
+                    </Space.Compact>
+                </FormItem>
+            </Form>
         </Modal>
     )
 }

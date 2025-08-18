@@ -42,7 +42,7 @@ const Selector: FC = () => {
                     break;
             }
         }
-
+        window.close(); // 关闭当前窗口
     }
 
     return (

@@ -9,7 +9,7 @@ const Modal: React.FC<ModalProps> = ({
   height,
   maskClosable = true,
   closable = true,
-  zIndex = 1000,
+  zIndex = 10000,
   centered = true,
   destroyOnClose = false,
   className = '',
@@ -45,11 +45,6 @@ const Modal: React.FC<ModalProps> = ({
     onOk?.();
   };
 
-  const handleMaskClick = (e: React.MouseEvent) => {
-    if (maskClosable && e.target === e.currentTarget) {
-      handleClose();
-    }
-  };
 
   const renderFooter = () => {
     if (footer === null) return null;
@@ -88,53 +83,43 @@ const Modal: React.FC<ModalProps> = ({
   const renderModal = () => {
     if (!isMounted || !visible) return null;
 
-    const modalContent = (
+    return (
       <div
-        className={`${styles.modalWrap} ${wrapClassName}`}
-        style={{ zIndex }}
-        onClick={handleMaskClick}
+        className={`${styles.modal} ${className} ${centered ? styles.modalCentered : ''}`}
+        style={{
+          width: typeof width === 'number' ? `${width}px` : width,
+          height: height ? (typeof height === 'number' ? `${height}px` : height) : undefined,
+          zIndex
+        }}
       >
-        <div
-          className={`${styles.modal} ${className} ${centered ? styles.modalCentered : ''}`}
-          style={{
-            width: typeof width === 'number' ? `${width}px` : width,
-            height: height ? (typeof height === 'number' ? `${height}px` : height) : undefined,
-          }}
-        >
-          {/* 遮罩层 */}
-          <div className={`${styles.modalMask} ${maskClassName}`} />
-
-          {/* 模态框内容 */}
-          <div className={styles.modalContent}>
-            {/* 头部 */}
-            {(title || closable) && (
-              <div className={`${styles.modalHeader} ${headerClassName}`}>
-                {title && <div className={styles.modalTitle}>{title}</div>}
-                {closable && (
-                  <button
-                    type="button"
-                    className={styles.modalClose}
-                    onClick={handleClose}
-                  >
-                    {closeIcon || <span>×</span>}
-                  </button>
-                )}
-              </div>
-            )}
-
-            {/* 内容区域 */}
-            <div className={`${styles.modalBody} ${bodyClassName}`}>
-              {children}
+        {/* 模态框内容 */}
+        <div className={styles.modalContent}>
+          {/* 头部 */}
+          {(title || closable) && (
+            <div className={`${styles.modalHeader} ${headerClassName}`}>
+              {title && <div className={styles.modalTitle}>{title}</div>}
+              {closable && (
+                <button
+                  type="button"
+                  className={styles.modalClose}
+                  onClick={handleClose}
+                >
+                  {closeIcon || <span>×</span>}
+                </button>
+              )}
             </div>
+          )}
 
-            {/* 底部 */}
-            {renderFooter()}
+          {/* 内容区域 */}
+          <div className={`${styles.modalBody} ${bodyClassName}`}>
+            {children}
           </div>
+
+          {/* 底部 */}
+          {renderFooter()}
         </div>
       </div>
     );
-
-    return modalContent;
   };
 
   return renderModal();
