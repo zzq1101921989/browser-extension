@@ -1,8 +1,8 @@
-import { AppContext } from "../../../popup/context";
-import { useState, FC, useContext } from "react";
+import { AppContext } from "../../context";
+import {useState, FC, useContext, JSX} from "react";
 import './index.css';
 
-const Selector: FC = () => {
+const Selector: () => JSX.Element = () => {
     const context = useContext(AppContext);
     const [activeTab, setActiveTab] = useState('tab1');
     const [activeSubTab, setActiveSubTab] = useState('sub-tab1');
@@ -20,7 +20,7 @@ const Selector: FC = () => {
      * @description 该函数用于向当前激活的标签页发送命令，
      * @param status 
      */
-    const sendContentCommand = async (status: App.MessageStatus) => {
+    const sendContentCommand = async (status: AppType.MessageStatus) => {
         // 1. 获取当前激活的页面
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (tab.id) {

@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
   return {
     entry: {
       background: './src/background/index.ts',
-      content: './src/content/index.ts',
+      content: './src/content/index.tsx',
       popup: './src/popup/index.tsx',
       options: './src/options/index.tsx'
     },

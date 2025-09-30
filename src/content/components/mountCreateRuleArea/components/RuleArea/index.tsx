@@ -1,14 +1,13 @@
 import Modal from "@components/Modal";
 import { Button, Form, Input, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { useState } from "react";
+import {FC, JSX, useState} from "react";
 import { createRoot } from "react-dom/client";
 
-
-type CreateRuleAreaProps = {
-    visible: boolean;
+interface RuleArea {
+    visible?: boolean
 }
-const CreateRuleArea: React.FC<CreateRuleAreaProps> = (props) => {
+const RuleArea: FC<RuleArea> = (props) => {
     const { visible = true } = props;
 
     const [open, setOpen] = useState(visible);
@@ -20,8 +19,13 @@ const CreateRuleArea: React.FC<CreateRuleAreaProps> = (props) => {
         // 2.提供移动过滤器，让用户更加清晰的抓取想要获取的数据
 
         // 3.关闭移动过滤器，鼠标移动事件取消
-        console.log(document.body, 'window');
-        
+
+        const moveEvent = (e: MouseEvent) => {
+            console.log(e, 'e')
+        }
+
+        document.body.addEventListener('mousemove', moveEvent)
+
     }
 
     return (
@@ -47,13 +51,4 @@ const CreateRuleArea: React.FC<CreateRuleAreaProps> = (props) => {
         </Modal>
     )
 }
-
-export default (container: HTMLElement) => {
-    const root = createRoot(container);
-    root.render(<CreateRuleArea visible />);
-
-    return () => {
-        root.unmount();
-        container.remove();
-    }
-}
+export default RuleArea

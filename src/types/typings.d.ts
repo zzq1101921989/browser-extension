@@ -12,7 +12,7 @@ declare namespace AppContextType {
   type CrawlStatus = 'idle' | 'crawling' | 'completed'
 }
 
-declare namespace App {
+declare namespace AppType {
   type MessageStatus = 'Intelligent' | 'CreateRule';
 }
 

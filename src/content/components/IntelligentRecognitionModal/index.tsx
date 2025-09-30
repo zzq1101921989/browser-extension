@@ -94,12 +94,4 @@ const IntelligentRecognitionModal = () => {
   );
 };
 
-export default (container: HTMLElement) => {
-    const root = createRoot(container);
-    root.render(<IntelligentRecognitionModal />);
-
-    return () => {
-        root.unmount();
-        container.remove();
-    }
-}
+export default IntelligentRecognitionModal

@@ -1,4 +1,4 @@
-import { createContext, FC, ReactElement, useState } from "react";
+import {createContext, FC, JSX, ReactElement, useState} from "react";
 
 const AppContext = createContext({})
 
@@ -6,7 +6,7 @@ const AppContext = createContext({})
  * 全局状态管理组件
  * @returns 
  */
-const AppContextProvider: FC<{ children?: ReactElement }> = (props) => {
+const AppContextProvider: (props: Record<string, any>) => JSX.Element = (props) => {
 
     const [rulesConfig, setRulesConfig] = useState({
         currentRules: null,
