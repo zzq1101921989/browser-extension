@@ -1,4 +1,4 @@
-const Status = () => {
+const Header = () => {
     return (
         <header className="popup-header">
             <h1>网页数据采集器</h1>
@@ -14,4 +14,4 @@ const Status = () => {
     )
 }
 
-export default Status;
+export default Header;

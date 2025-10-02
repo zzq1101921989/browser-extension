@@ -2,6 +2,10 @@ import { createRoot } from 'react-dom/client';
 import { useState } from 'react';
 import './index.css'; // Assuming you have a CSS file for styles
 
+/**
+ * 选择智能识别还是手动指定规则的弹窗
+ * @constructor
+ */
 const IntelligentRecognitionModal = () => {
   const [pageTurnOption, setPageTurnOption] = useState('auto');
   
