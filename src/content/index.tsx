@@ -1,9 +1,6 @@
 /**
  * 注入网页js逻辑
  */
-
-import mountIdentifyArea from "./components/IntelligentRecognitionModal";
-import mountCreateRuleArea from "./components/mountCreateRuleArea/CreateRuleArea";
 import {createRoot} from "react-dom/client";
 import App from "./App";
 import {ReactNode} from "react";

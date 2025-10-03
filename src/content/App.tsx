@@ -1,6 +1,6 @@
 import {JSX, useEffect, useState} from "react";
 import IntelligentRecognitionModal from "./components/IntelligentRecognitionModal";
-import CreateRuleArea from "./components/mountCreateRuleArea/CreateRuleArea";
+import CreateRuleArea from "./components/RuleArea/CreateRuleArea";
 
 const App: () => JSX.Element = () => {
 
@@ -13,7 +13,6 @@ const App: () => JSX.Element = () => {
 
     useEffect(() => {
         const handleMessage = (event: CustomEvent) => {
-            console.log('有动静嘛？')
             setState({
                 currentView: event.detail.action,
                 props: event.detail.data || {}
