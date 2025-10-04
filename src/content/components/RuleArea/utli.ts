@@ -1,6 +1,10 @@
 
 export const HIGHLIGHT_ID = 'data-ai-highlight';
 
+/**
+ * 高亮传入的元素
+ * @param elements 元素集合
+ */
 export function highlightElements(elements: HTMLElement[]): void {
     elements.forEach(el => {
         el.setAttribute(HIGHLIGHT_ID, 'true');
@@ -57,14 +61,11 @@ export function unHighlightElements(highlightId: string = 'data-ai-highlight'): 
  *   - maxDepth: 最大递归深度（默认5）
  * @returns 字符串化的路径（如 "div#header>ul.list>li.item"）
  */
-export function elementToPathString(
-    element: HTMLElement,
-    options: {
+export function elementToPathString(element: HTMLElement, options: {
         withParents?: boolean;
         withChildren?: boolean;
         maxDepth?: number;
-    } = {}
-): string {
+    } = {}): string {
     // 参数默认值
     const { withParents = true, withChildren = false, maxDepth = 5 } = options;
 

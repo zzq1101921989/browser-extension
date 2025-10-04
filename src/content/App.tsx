@@ -1,15 +1,16 @@
 import {JSX, useEffect, useState} from "react";
 import IntelligentRecognitionModal from "./components/IntelligentRecognitionModal";
 import CreateRuleArea from "./components/RuleArea/CreateRuleArea";
+import {UpdateRuleArea} from "./components/RuleArea/UpdateRuleArea";
 
 const App: () => JSX.Element = () => {
 
-    const [state, setState] = useState<{ currentView: 'Intelligent' | 'initial' | 'CreateRule', props: Record<string, any> }>({
+    const [state, setState] = useState<{ currentView: 'Intelligent' | 'initial' | 'CreateRule' | 'UpdateRule', props: Record<string, any> }>({
         currentView: 'initial',
         props: {}
     });
 
-    console.log('APP组件挂载完成')
+    console.log('初始化准备完毕')
 
     useEffect(() => {
         const handleMessage = (event: CustomEvent) => {
@@ -33,6 +34,11 @@ const App: () => JSX.Element = () => {
             {
                 state.currentView === 'CreateRule' && (
                     <CreateRuleArea />
+                )
+            }
+            {
+                state.currentView === 'UpdateRule' && (
+                    <UpdateRuleArea />
                 )
             }
         </>

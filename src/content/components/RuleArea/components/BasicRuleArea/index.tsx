@@ -1,54 +1,96 @@
 import Modal from "@components/Modal";
-import { Button, Form, Input, Space } from "antd";
+import {Button, Form, Input, Space} from "antd";
 import FormItem from "antd/es/form/FormItem";
-import {FC, JSX, useState} from "react";
-import { createRoot } from "react-dom/client";
+import React, {useEffect, useState} from "react";
+import {highlightElements, unHighlightElements, elementToPathString} from '../../utli'
+import {ModalProps} from "@components/Modal/types";
 
-interface RuleArea {
-    visible?: boolean
-}
-const RuleArea: FC<RuleArea> = (props) => {
-    const { visible = true } = props;
+let preHtml: HTMLElement | null = null;
+let moveEventListener: ((e: MouseEvent) => void) | null = null;
+let clickEventListener: ((e: Event) => void) | null = null;
 
+const CreateRuleArea: React.FC<ModalProps> = (props) => {
+    const {visible} = props
     const [open, setOpen] = useState(visible);
 
-    const startGetDom = () => {
+    const [form] = Form.useForm()
 
-        // 1.触发鼠标移动高亮元素的逻辑
-
-        // 2.提供移动过滤器，让用户更加清晰的抓取想要获取的数据
-
-        // 3.关闭移动过滤器，鼠标移动事件取消
-
-        const moveEvent = (e: MouseEvent) => {
-            console.log(e, 'e')
+    // 清理所有事件监听器
+    const cleanupEventListeners = () => {
+        if (moveEventListener) {
+            document.body.removeEventListener('mousemove', moveEventListener);
+            moveEventListener = null;
         }
+        if (clickEventListener) {
+            document.removeEventListener('click', clickEventListener);
+            clickEventListener = null;
+        }
+        unHighlightElements();
+        preHtml = null;
+    };
 
-        document.body.addEventListener('mousemove', moveEvent)
+    const startHighlightDom = () => {
+        cleanupEventListeners(); // 先清理旧的监听器
 
-    }
+        // 鼠标移动事件
+        moveEventListener = (e: MouseEvent) => {
+            const modal = document.querySelector('.zq_rule_modal');
+            if (modal && modal.contains(e.target as Node)) return;
+
+            if (preHtml) unHighlightElements();
+            preHtml = e.target as HTMLElement;
+            highlightElements([preHtml]);
+        };
+
+        // 点击事件（延迟绑定）
+        setTimeout(() => {
+            clickEventListener = (e: Event) => {
+                e.preventDefault();
+
+                if (preHtml) {
+                    const parentPath = elementToPathString(preHtml, {maxDepth: 3})
+                    form.setFieldsValue({
+                        'elBlock': parentPath
+                    })
+
+                    cleanupEventListeners();
+                }
+
+            };
+            document.addEventListener('click', clickEventListener);
+        }, 0);
+
+        document.body.addEventListener('mousemove', moveEventListener);
+    };
+
+    // 组件卸载时自动清理
+    useEffect(() => {
+        return cleanupEventListeners;
+    }, []);
 
     return (
         <Modal
             visible={open}
+            className="zq_rule_modal"
             title="创建规则"
             width={500}
             height='100vh'
-            onCancel={() => {
-                setOpen(false);
-            }}
+            onCancel={() => setOpen(false)}
             maskClosable={false}
         >
-            <Form>
-                <FormItem label='列表数据源'>
+            <Form form={form}>
+                <FormItem label="列表数据源">
                     <Space.Compact>
-                        <Input placeholder='请输入数据源' readOnly />
-                        <Button type='primary' onClick={startGetDom}>选择数据源</Button>
+                        <FormItem name='elBlock'>
+                            <Input placeholder="请选择数据源" readOnly/>
+                        </FormItem>
+                        <Button type="primary" onClick={startHighlightDom}>选择数据源</Button>
                         <Button>验证</Button>
                     </Space.Compact>
                 </FormItem>
             </Form>
         </Modal>
-    )
-}
-export default RuleArea
+    );
+};
+
+export default CreateRuleArea;
