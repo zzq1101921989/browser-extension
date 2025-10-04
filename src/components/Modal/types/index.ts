@@ -17,7 +17,7 @@ export interface ModalProps {
   footerClassName?: string;
   footer?: React.ReactNode | ((props: { close: () => void }) => React.ReactNode);
   onCancel?: () => void;
-  onOk?: () => void;
+  onOk?: (formData: any) => Promise<any>;
   okText?: string;
   cancelText?: string;
   confirmLoading?: boolean;

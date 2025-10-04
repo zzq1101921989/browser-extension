@@ -41,10 +41,6 @@ const Modal: React.FC<ModalProps> = ({
     onCancel?.();
   };
 
-  const handleOk = () => {
-    onOk?.();
-  };
-
 
   const renderFooter = () => {
     if (footer === null) return null;
@@ -69,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({
         <button
           type="button"
           className={`${styles.modalBtn} ${styles.modalBtnConfirm}`}
-          onClick={handleOk}
+          onClick={onOk}
           disabled={confirmLoading}
           {...okButtonProps}
         >

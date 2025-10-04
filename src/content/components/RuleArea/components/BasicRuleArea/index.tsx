@@ -63,6 +63,19 @@ const CreateRuleArea: React.FC<ModalProps> = (props) => {
         document.body.addEventListener('mousemove', moveEventListener);
     };
 
+    const highlightSelectDom = () => {
+        const pendingHighlightDom = document.querySelectorAll(form.getFieldValue('elBlock'))
+        if (pendingHighlightDom.length) {
+            // 高亮选中的选择
+            highlightElements(Array.from(pendingHighlightDom))
+
+            // l两秒之后取消高亮
+            setTimeout(() => {
+                cleanupEventListeners()
+            }, 2000)
+        }
+    }
+
     // 组件卸载时自动清理
     useEffect(() => {
         return cleanupEventListeners;
@@ -71,6 +84,9 @@ const CreateRuleArea: React.FC<ModalProps> = (props) => {
     return (
         <Modal
             visible={open}
+            onOk={async () => {
+                props?.onOk?.(await form.validateFields())
+            }}
             className="zq_rule_modal"
             title="创建规则"
             width={500}
@@ -85,7 +101,7 @@ const CreateRuleArea: React.FC<ModalProps> = (props) => {
                             <Input placeholder="请选择数据源" readOnly/>
                         </FormItem>
                         <Button type="primary" onClick={startHighlightDom}>选择数据源</Button>
-                        <Button>验证</Button>
+                        <Button onClick={highlightSelectDom}>验证</Button>
                     </Space.Compact>
                 </FormItem>
             </Form>
