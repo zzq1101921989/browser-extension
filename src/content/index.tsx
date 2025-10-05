@@ -1,14 +1,9 @@
 /**
  * 注入网页js逻辑
  */
-import {createRoot} from "react-dom/client";
+import {createRoot, Root} from "react-dom/client";
 import App from "./App";
 import {ReactNode} from "react";
-
-type ConCreateRuletentScriptMessage = {
-    action: AppType.MessageStatus;
-    data?: any;
-}
 
 // 创建隔离的容器
 function createComponentContainer(id: string) {
@@ -25,22 +20,20 @@ function createComponentContainer(id: string) {
     return container;
 }
 
+function renderApp() {
+    const root = createRoot(createComponentContainer('xc_app'));
+    root.render(<App/> as ReactNode)
+}
 
 function initEvent() {
-    window.onload = () => {
-        console.log('插件加载完成 -----');
-    }
-
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             //  初始化的时候加载基础组件，组件用于承载一些相关的功能
             if (message.action === 'initial') {
-                const root = createRoot(createComponentContainer('xc_app'));
-                root.render(<App/> as ReactNode)
+                renderApp()
                 sendResponse({status: 'success'});
             }
 
             if (message.action === 'Intelligent') {
-                console.log('触发了把')
                 // 派发自定义事件
                 window.dispatchEvent(new CustomEvent('pluginMessage', {
                     detail: {
@@ -68,4 +61,26 @@ function initEvent() {
     )
 }
 
+function initWebSocket() {
+    // 开发环境下连接 WebSocket
+    if (process.env.NODE_ENV === 'development') {
+        const socket = new WebSocket(`${process.env.WS_SERVER_URL}?clientType=content`);
+
+        socket.onmessage = (event) => {
+            if (event.data === 'RELOAD') {
+                // console.log('🔄 收到热更新信号！!');
+                // 重新渲染组件（暂时行不通）
+                // renderApp();
+                //  修改成：在background 中 刷新插件，然后在content 中去刷新页面
+                window.location.reload()
+            }
+        };
+
+        socket.onerror = (error) => {
+            console.error('WebSocket 错误:', error);
+        };
+    }
+}
+
 initEvent()
+initWebSocket()

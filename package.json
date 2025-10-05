@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
+    "ws":  "node scripts/ws-server.js",
     "start": "webpack serve --mode development",
     "copy-assets": "cp -r public/* dist/",
     "package": "npm run build && npm run copy-assets"
@@ -18,10 +19,14 @@
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@types/chrome": "^0.1.1",
+    "@types/node": "^24.6.2",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
+    "@types/ws": "^8.18.1",
     "babel-loader": "^10.0.0",
     "babel-plugin-import": "^1.13.8",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.2.1",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
@@ -36,7 +41,8 @@
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-bundle-size-analyzer": "^3.1.0",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "^5.2.2",
+    "ws": "^8.18.3"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

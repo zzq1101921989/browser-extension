@@ -74,11 +74,11 @@ export function elementToPathString(element: HTMLElement, options: {
         let selector = el.tagName.toLowerCase();
 
         // 添加ID（如果有）
-        if (el.id) selector += `#${el.id}`;
+        // if (el.id) selector += `#${el.id}`;
 
         // 添加Class（如果有且有效）
         const className = el.className;
-        if (typeof className === 'string' && className.trim().length > 0) {
+        if (className.trim().length > 0) {
             const validClasses = className.split(/\s+/).filter(c => c.length > 0);
             if (validClasses.length > 0) selector += `.${validClasses.join('.')}`;
         }

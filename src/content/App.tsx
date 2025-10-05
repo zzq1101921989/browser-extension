@@ -4,7 +4,6 @@ import CreateRuleArea from "./components/RuleArea/CreateRuleArea";
 import {UpdateRuleArea} from "./components/RuleArea/UpdateRuleArea";
 
 const App: () => JSX.Element = () => {
-
     const [state, setState] = useState<{ currentView: 'Intelligent' | 'initial' | 'CreateRule' | 'UpdateRule', props: Record<string, any> }>({
         currentView: 'initial',
         props: {}

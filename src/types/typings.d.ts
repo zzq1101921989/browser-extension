@@ -26,3 +26,9 @@ declare module '*.module.css' {
   const classes: { [key: string]: string };
   export default classes;
 }
+declare const process: {
+  env: {
+    NODE_ENV: 'development' | 'production';
+    WS_SERVER_URL: string
+  };
+};
